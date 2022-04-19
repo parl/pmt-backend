@@ -7,17 +7,18 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function validateUser(Request $request)
+    public function getUser(Request $request)
     {
         $data = User::get();
         if ($data) {
-            return response([
-                "user" => "true"
-            ]);
+            return response()->json([
+                $data => $data,
+                "Status" => "Success"
+            ], 200);
         } else {
-            return response([
-                "user" => "false"
-            ]);
+            return response()->json([
+                "Status" => "Failed"
+            ], 200);
         }
     }
 }
