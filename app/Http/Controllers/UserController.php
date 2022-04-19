@@ -12,7 +12,7 @@ class UserController extends Controller
         $data = User::get();
         if ($data) {
             return response()->json([
-                $data => $data,
+                "data" => $data,
                 "Status" => "Success"
             ], 200);
         } else {
