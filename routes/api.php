@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::get('/data/user', [UserController::class, 'getUser']);
+Route::get('/user', [UserController::class, 'getAllUser']);
+
+Route::post('/team', [TeamController::class, 'createTeam']);
+Route::get('/team', [TeamController::class, 'getTeam']);
+Route::delete('/team/{id}', [TeamController::class, 'deleteTeam']);
+Route::put('/team/{id}', [TeamController::class, 'updateTeam']);

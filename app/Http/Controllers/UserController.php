@@ -7,7 +7,7 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function getUser(Request $request)
+    public function getAllUser(Request $request)
     {
         $data = User::get();
         if ($data) {
@@ -18,7 +18,7 @@ class UserController extends Controller
         } else {
             return response()->json([
                 "Status" => "Failed"
-            ], 200);
+            ], 400);
         }
     }
 }
