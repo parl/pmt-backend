@@ -20,4 +20,8 @@ class Team extends Model
     {
         return $this->hasMany(User_team::class, 'team_id');
     }
+    public function Project()
+    {
+        return $this->hasMany(Project::class, 'id_team');
+    }
 }

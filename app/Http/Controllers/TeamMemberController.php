@@ -12,8 +12,8 @@ class TeamMemberController extends Controller
     public function createTeamMember(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "team_id" => "required|string",
-            "user_id" => "required|string",
+            "team_id" => "required|uuid",
+            "user_id" => "required|uuid",
         ]);
 
         if ($validator->fails()) {

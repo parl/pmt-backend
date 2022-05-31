@@ -16,14 +16,14 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('start_date');
-            $table->string('end_date');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->string('description');
-            $table->string('id_team');
+            $table->uuid('id_team');
             $table->uuid('PIC_id');
-            $table->string('progress');
             $table->timestamps();
             $table->foreign('PIC_id')->references('id')->on('users');
+            $table->foreign('id_team')->references('id')->on('teams');
         });
         Schema::table('projects', function (Blueprint $table) {
             $table->softDeletes();

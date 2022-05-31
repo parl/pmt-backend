@@ -19,10 +19,13 @@ class Project extends Model
         'description',
         'id_team',
         'PIC_id',
-        'progress',
     ];
     public function user()
     {
         return $this->belongsTo(User::class, 'PIC_id');
+    }
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'id_team');
     }
 }

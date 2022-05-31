@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\UserController;
@@ -35,3 +36,8 @@ Route::put('/team/{id}', [TeamController::class, 'updateTeam']);
 Route::post('/team-member', [TeamMemberController::class, 'createTeamMember']);
 Route::get('/team-member', [TeamMemberController::class, 'getTeamMember']);
 Route::delete('/team-member/{id}', [TeamMemberController::class, 'deleteTeamMember']);
+
+Route::post('/project', [ProjectController::class, 'createProject']);
+Route::get('/project', [ProjectController::class, 'getProject']);
+Route::delete('/project/{id}', [ProjectController::class, 'deleteProject']);
+Route::put('/project/{id}', [ProjectController::class, 'updateProject']);
