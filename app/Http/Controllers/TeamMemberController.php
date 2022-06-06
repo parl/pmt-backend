@@ -33,9 +33,9 @@ class TeamMemberController extends Controller
         ], 200);
     }
 
-    public function getTeamMember()
+    public function getTeamMember($id)
     {
-        $data = User_team::get();
+        $data = User_team::where('team_id', '=', $id);
         if ($data) {
             return response()->json([
                 "data" => $data,

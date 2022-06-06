@@ -34,7 +34,7 @@ Route::delete('/team/{id}', [TeamController::class, 'deleteTeam']);
 Route::put('/team/{id}', [TeamController::class, 'updateTeam']);
 
 Route::post('/team-member', [TeamMemberController::class, 'createTeamMember']);
-Route::get('/team-member', [TeamMemberController::class, 'getTeamMember']);
+Route::get('/team-member/{teamId}', [TeamMemberController::class, 'getTeamMember']);
 Route::delete('/team-member/{id}', [TeamMemberController::class, 'deleteTeamMember']);
 
 Route::post('/project', [ProjectController::class, 'createProject']);
