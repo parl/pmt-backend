@@ -28,4 +28,8 @@ class Project extends Model
     {
         return $this->belongsTo(Team::class, 'id_team');
     }
+    public function InternalBriefing()
+    {
+        return $this->hasMany(InternalBriefing::class, 'project_id');
+    }
 }

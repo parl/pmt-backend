@@ -35,6 +35,12 @@ class AuthController extends Controller
         ], 200);
     }
 
+    public function notAuthenticated()
+    {
+        return response()->json([
+            "Status" => "Not Authenticated"
+        ], 200);
+    }
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -49,8 +55,10 @@ class AuthController extends Controller
         if (!$user || !Hash::check($fields['password'], $user['password'])) {
             return $this->ErrorResponse("Username atau Password salah", 400);
         };
+        $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
             "User" => $user['username'],
+            "AccessToken" => $token,
             "Status" => "Login Berhasil"
         ], 200);
     }
