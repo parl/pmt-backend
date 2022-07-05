@@ -7,19 +7,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SecurityTest extends Model
+class AssignedTo extends Model
 {
-    use Uuids;
     use HasFactory;
+    use Uuids;
     use SoftDeletes;
     protected $fillable = [
-        'test_case',
-        'priority',
-        'status',
-        'project_id'
+        'user_id',
+        'developing_id'
     ];
-    public function Project()
+    public function user()
     {
-        return $this->belongsTo(Project::class, 'project_id');
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function team()
+    {
+        return $this->belongsTo(Developing::class, 'developing_id');
     }
 }

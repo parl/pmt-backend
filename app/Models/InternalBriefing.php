@@ -22,4 +22,12 @@ class InternalBriefing extends Model
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
+    public function Developing()
+    {
+        return $this->hasMany(Developing::class, 'task_id');
+    }
+    public function Review()
+    {
+        return $this->hasMany(Review::class, 'task_id');
+    }
 }

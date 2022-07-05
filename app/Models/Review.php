@@ -7,19 +7,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class FunctionalTest extends Model
+class Review extends Model
 {
     use Uuids;
     use HasFactory;
     use SoftDeletes;
     protected $fillable = [
-        'test_case',
-        'priority',
+        'task_id',
         'status',
-        'project_id'
+        'type',
     ];
-    public function Project()
+    public function internalBriefing()
     {
-        return $this->belongsTo(Project::class, 'project_id');
+        return $this->belongsTo(InternalBriefing::class, 'task_id');
     }
 }

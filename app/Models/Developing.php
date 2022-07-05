@@ -24,4 +24,8 @@ class Developing extends Model
     {
         return $this->belongsTo(InternalBriefing::class, 'task_id');
     }
+    public function AssignedTo()
+    {
+        return $this->hasMany(AssignedTo::class, 'developing_id');
+    }
 }

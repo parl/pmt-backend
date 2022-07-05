@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTestDetailsTable extends Migration
+class CreateTestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateTestDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('test_details', function (Blueprint $table) {
+        Schema::create('tests', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('test_case');
+            $table->string('priority');
+            $table->string('status');
             $table->string('description');
             $table->string('components');
             $table->string('steps_to_reproduce');
@@ -26,7 +29,7 @@ class CreateTestDetailsTable extends Migration
             $table->timestamps();
             $table->foreign('project_id')->references('id')->on('projects');
         });
-        Schema::table('test_details', function (Blueprint $table) {
+        Schema::table('tests', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -38,6 +41,6 @@ class CreateTestDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_details');
+        Schema::dropIfExists('tests');
     }
 }

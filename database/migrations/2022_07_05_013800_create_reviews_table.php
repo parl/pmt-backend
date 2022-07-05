@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFunctionalTestsTable extends Migration
+class CreateReviewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateFunctionalTestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('functional_tests', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('test_case');
-            $table->string('priority');
+            $table->uuid('task_id');
             $table->string('status');
-            $table->uuid('project_id');
+            $table->string('type');
             $table->timestamps();
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('task_id')->references('id')->on('internal_briefings');
         });
-        Schema::table('functional_tests', function (Blueprint $table) {
+        Schema::table('reviews', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -34,6 +33,6 @@ class CreateFunctionalTestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('functional_tests');
+        Schema::dropIfExists('reviews');
     }
 }

@@ -39,6 +39,11 @@ class User extends Authenticatable
         return $this->hasMany(User_team::class, 'user_id');
     }
 
+    public function AssignedTo()
+    {
+        return $this->hasMany(AssignedTo::class, 'user_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

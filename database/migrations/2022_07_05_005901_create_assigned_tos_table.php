@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSecurityTestsTable extends Migration
+class CreateAssignedTosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateSecurityTestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('security_tests', function (Blueprint $table) {
+        Schema::create('assigned_tos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('test_case');
-            $table->string('priority');
-            $table->string('status');
-            $table->uuid('project_id');
+            $table->uuid('user_id');
+            $table->uuid('developing_id');
             $table->timestamps();
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('developing_id')->references('id')->on('developings');
         });
-        Schema::table('security_tests', function (Blueprint $table) {
+        Schema::table('assigned_tos', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -34,6 +33,6 @@ class CreateSecurityTestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('security_tests');
+        Schema::dropIfExists('assigned_tos');
     }
 }
