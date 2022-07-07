@@ -24,11 +24,12 @@ class User extends Authenticatable
         'name',
         'email',
         'username',
-        'password'
+        'password',
+        'role',
     ];
-    protected $attributes = [
-        'role' => "user",
-    ];
+    // protected $attributes = [
+    //     'role' => "user",
+    // ];
     public function Project()
     {
         return $this->hasMany(Project::class, 'PIC_id');

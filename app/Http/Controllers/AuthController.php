@@ -16,12 +16,15 @@ class AuthController extends Controller
             "email" => "required|email",
             "username" => "required|string",
             "password" => "required|string",
+            "role" => "required|string",
         ]);
-
         if ($validator->fails()) {
             return response()->json(["data" => $validator->errors()], 400);
         };
         $fields = $validator->validated();
+        if ($fields['role'] != "user") {
+            return response()->json(["error" => "Role Salah"], 400);
+        }
         $user = User::where('email', $fields['email'])->first();
         if ($user) {
             return response()->json(["error" => "User Sudah Terdaftar"], 400);
@@ -41,6 +44,15 @@ class AuthController extends Controller
             "Status" => "Not Authenticated"
         ], 200);
     }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            "Status" => "Logout Berhasil"
+        ], 200);
+    }
+
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -53,7 +65,7 @@ class AuthController extends Controller
         $fields = $validator->validated();
         $user = User::where('username', $fields['username'])->first();
         if (!$user || !Hash::check($fields['password'], $user['password'])) {
-            return $this->ErrorResponse("Username atau Password salah", 400);
+            return response()->json(["error" => "Username / password salah"], 400);
         };
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
