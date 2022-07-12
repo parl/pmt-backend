@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\InternalBriefingController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RequirementController;
 use App\Http\Controllers\TeamController;
@@ -42,6 +43,10 @@ Route::group(['middleware' => ['auth:sanctum', 'admincheck']], function () {
     Route::delete('/requirement/{id}', [RequirementController::class, 'deleteRequirement']);
     Route::put('/requirement/{id}', [RequirementController::class, 'updateRequirement']);
 
+    Route::post('/internalBriefing', [InternalBriefingController::class, 'createInternalBriefing']);
+    Route::delete('/internalBriefing/{id}', [InternalBriefingController::class, 'deleteInternalBriefing']);
+    Route::put('/internalBriefing/{id}', [InternalBriefingController::class, 'updateInternalBriefing']);
+
     Route::post('/team-member', [TeamMemberController::class, 'createTeamMember']);
     Route::delete('/team-member/{id}', [TeamMemberController::class, 'deleteTeamMember']);
 
@@ -57,6 +62,7 @@ Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/team', [TeamController::class, 'getTeam']);
     Route::get('/requirement/{projectId}', [RequirementController::class, 'getRequirement']);
+    Route::get('/internalBriefing/{projectId}', [InternalBriefingController::class, 'getInternalBriefing']);
     Route::get('/team-member/{teamId}', [TeamMemberController::class, 'getTeamMember']);
     Route::get('/project', [ProjectController::class, 'getProject']);
 

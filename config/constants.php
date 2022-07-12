@@ -18,7 +18,7 @@ return [
         'PENDING' => 'PENDING',
         'CANCELED' => 'CANCELED',
     ],
-    'PRIORITY' => [
+    'CATEGORY' => [
         'PRIORITY_1' => 'PRIORITY_1',
         'PRIORITY_2' => 'PRIORITY_2',
     ],

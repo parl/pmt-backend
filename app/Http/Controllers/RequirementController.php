@@ -64,7 +64,7 @@ class RequirementController extends Controller
     public function updateRequirement(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            "requirement" => "required|string",
+            "requirement" => "string",
         ]);
         if ($validator->fails()) {
             return response()->json(["data" => $validator->errors()], 400);
