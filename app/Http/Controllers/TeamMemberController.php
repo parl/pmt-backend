@@ -20,7 +20,7 @@ class TeamMemberController extends Controller
             return response()->json(["data" => $validator->errors()], 400);
         };
         $fields = $validator->validated();
-        $userValid = User_team::where('team_id', $fields['team_id'])->andWhere('user_id', $fields['user_id'])->first();
+        $userValid = User_team::where('team_id', '=', $fields['team_id'])->Where('user_id', $fields['user_id'])->first();
         if ($userValid) {
             return response()->json(["error" => "anggota sudah terdaftar pada tim tersebut"], 400);
         }
