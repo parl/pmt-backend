@@ -22,7 +22,6 @@ class Test extends Model
         'steps_to_reproduce',
         'result',
         'expected_result',
-        'attachment',
         'type',
     ];
     public function Project()

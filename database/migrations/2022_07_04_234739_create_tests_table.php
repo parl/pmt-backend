@@ -23,7 +23,6 @@ class CreateTestsTable extends Migration
             $table->string('steps_to_reproduce');
             $table->string('result');
             $table->string('expected_result');
-            $table->string('attachment');
             $table->string('type');
             $table->uuid('project_id');
             $table->timestamps();

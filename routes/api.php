@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth:sanctum', 'admincheck']], function () {
     Route::delete('/project/{id}', [ProjectController::class, 'deleteProject']);
     Route::put('/project/{id}', [ProjectController::class, 'updateProject']);
 
-    Route::get('/test', [TestController::class, 'test']);
+    Route::post('/test', [TestController::class, 'createTest']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
