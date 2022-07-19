@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
@@ -46,10 +47,15 @@ class ProjectController extends Controller
 
     public function getproject()
     {
+        $users = DB::table('projects')
+            ->join('users', 'users.id', '=', 'projects.PIC_id')
+            ->join('teams', 'teams.id', '=', 'projects.id_team')
+            ->select('projects.*', 'users.name as PIC_name', 'teams.name as team_name')
+            ->get();
         $data = Project::get();
-        if ($data) {
+        if ($users) {
             return response()->json([
-                "data" => $data,
+                "data" => $users,
                 "Status" => "Success"
             ], 200);
         } else {
