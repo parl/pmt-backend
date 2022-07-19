@@ -34,7 +34,7 @@ class TeamMemberController extends Controller
 
     public function getTeamMember($id)
     {
-        $data = User_team::where('team_id', '=', $id);
+        $data = User_team::where('team_id', '=', $id)->get();
         if ($data) {
             return response()->json([
                 "data" => $data,
