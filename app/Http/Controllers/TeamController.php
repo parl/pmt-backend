@@ -32,6 +32,21 @@ class TeamController extends Controller
         ], 200);
     }
 
+    public function getTeamById($id)
+    {
+        $data = Team::where('id', '=', $id)->first();;
+        if ($data) {
+            return response()->json([
+                "data" => $data,
+                "Status" => "Success"
+            ], 200);
+        } else {
+            return response()->json([
+                "Status" => "Failed"
+            ], 400);
+        }
+    }
+
     public function getTeam()
     {
         $data = Team::get();
