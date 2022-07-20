@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Team;
+use App\Models\User_team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -47,12 +48,13 @@ class TeamController extends Controller
         }
     }
 
-    public function getTeam()
+    public function getTeam($id)
     {
         $data = Team::get();
-        if ($data) {
+        $team_member = User_team::where('team_id', '=', $id)->get();
+        if ($data && $team_member) {
             return response()->json([
-                "data" => $data,
+                "data" => [$data, $team_member],
                 "Status" => "Success"
             ], 200);
         } else {

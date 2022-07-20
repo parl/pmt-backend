@@ -60,9 +60,9 @@ Route::group(['middleware' => ['auth:sanctum', 'admincheck']], function () {
 Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
 
     Route::post('/auth/logout', [AuthController::class, 'logout']);
-    Route::get('/team', [TeamController::class, 'getTeam']);
+    Route::get('/team/{id}', [TeamController::class, 'getTeam']);
     Route::get('/user/{id}', [UserController::class, 'getUserById']);
-    Route::get('/team/{id}', [TeamController::class, 'getTeamById']);
+    Route::get('/teamById/{id}', [TeamController::class, 'getTeamById']);
     Route::get('/requirement/{projectId}', [RequirementController::class, 'getRequirement']);
     Route::get('/internalBriefing/{projectId}', [InternalBriefingController::class, 'getInternalBriefing']);
     Route::get('/team-member/{teamId}', [TeamMemberController::class, 'getTeamMember']);
