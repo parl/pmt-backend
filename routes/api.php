@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InternalBriefingController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RequirementController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TeamMemberController;
@@ -43,6 +44,14 @@ Route::group(['middleware' => ['auth:sanctum', 'admincheck']], function () {
     Route::delete('/requirement/{id}', [RequirementController::class, 'deleteRequirement']);
     Route::put('/requirement/{id}', [RequirementController::class, 'updateRequirement']);
 
+    Route::post('/test', [TestController::class, 'createTest']);
+    Route::delete('/test/{id}', [TestController::class, 'deleteTest']);
+    Route::put('/test/{id}', [TestController::class, 'updateTest']);
+
+    Route::post('/review', [ReviewController::class, 'createReview']);
+    Route::delete('/review/{id}', [ReviewController::class, 'deleteReview']);
+    Route::put('/review/{id}', [ReviewController::class, 'updateReview']);
+
     Route::post('/internalBriefing', [InternalBriefingController::class, 'createInternalBriefing']);
     Route::delete('/internalBriefing/{id}', [InternalBriefingController::class, 'deleteInternalBriefing']);
     Route::put('/internalBriefing/{id}', [InternalBriefingController::class, 'updateInternalBriefing']);
@@ -63,10 +72,14 @@ Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
     Route::get('/team/{id}', [TeamController::class, 'getTeam']);
     Route::get('/user/{id}', [UserController::class, 'getUserById']);
     Route::get('/teamById/{id}', [TeamController::class, 'getTeamById']);
+    Route::get('/team', [TeamController::class, 'getAllTeam']);
+    Route::get('/review/{taskId}', [ReviewController::class, 'getReview']);
+    Route::get('/reviewById/{Id}', [ReviewController::class, 'getReviewById']);
     Route::get('/requirement/{projectId}', [RequirementController::class, 'getRequirement']);
     Route::get('/internalBriefing/{projectId}', [InternalBriefingController::class, 'getInternalBriefing']);
     Route::get('/team-member/{teamId}', [TeamMemberController::class, 'getTeamMember']);
     Route::get('/project', [ProjectController::class, 'getProject']);
 
-    Route::get('/test', [TestController::class, 'test']);
+    Route::get('/test/{id}', [TestController::class, 'getTest']);
+    Route::get('/attachment/{testId}', [TestController::class, 'getAttachment']);
 });

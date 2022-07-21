@@ -28,7 +28,10 @@ class InternalBriefingController extends Controller
         }
         if ($fields['category'] == config('constants.CATEGORY.PRIORITY_1') || $fields['category'] == config('constants.CATEGORY.PRIORITY_2')) {
         } else {
-            return response()->json(["error" => "Category salah"], 400);
+            return response()->json([
+                "error" => "Category salah",
+                "category tersedia" => config('constants.CATEGORY')
+            ], 400);
         }
         $new_internalBriefing = InternalBriefing::create($fields);
         return response()->json([

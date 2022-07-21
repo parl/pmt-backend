@@ -85,14 +85,18 @@ class ProjectController extends Controller
             "description" => "string",
             "id_team" => "uuid",
             "PIC_id" => "uuid",
-            "start_date" => "date",
-            "end_date" => "date",
+            "start_date" => "string",
+            "end_date" => "string",
             "progress" => "string",
         ]);
         if ($validator->fails()) {
             return response()->json(["data" => $validator->errors()], 400);
         };
         $fields = $validator->validated();
+        $fields['start_date'] = date('Y-m-d H:i:s', $fields['start_date']);
+        if ($fields['end_date']) {
+            $fields['end_date'] = date('Y-m-d H:i:s', $fields['end_date']);
+        }
         $name = Project::where('name', $fields['name'])->first();
         if ($name) {
             return response()->json(["error" => "Nama project Sudah digunakan"], 400);

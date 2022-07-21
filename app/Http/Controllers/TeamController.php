@@ -48,9 +48,24 @@ class TeamController extends Controller
         }
     }
 
-    public function getTeam($id)
+    public function getAllTeam()
     {
         $data = Team::get();
+        if ($data) {
+            return response()->json([
+                "data" => $data,
+                "Status" => "Success"
+            ], 200);
+        } else {
+            return response()->json([
+                "Status" => "Failed"
+            ], 400);
+        }
+    }
+
+    public function getTeam($id)
+    {
+        $data = Team::where('id', '=', $id)->get();
         $team_member = User_team::where('team_id', '=', $id)->get();
         if ($data && $team_member) {
             return response()->json([

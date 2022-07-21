@@ -11,34 +11,6 @@ use Illuminate\Support\Facades\Validator;
 class TestController extends Controller
 {
     //
-    public function readFile(Request $request, $id)
-    {
-        $filePath = 'files/test';
-        // if (gettype($request->query('path')) != "NULL") {
-        //     $imgPath = $filePath . '/' . $request->query('path');
-        // }
-        // if (!is_dir(public_path($imgPath))) {
-        //     return $this->ErrorResponse('Folder tidak ditemukan', 404);
-        // }
-        $fileScan = scandir(public_path($filePath));
-        $files = array();
-        $directories = array();
-        foreach ($fileScan as $file) {
-            if ($file == '.' || $file == '..') {
-                continue;
-            }
-            if (is_dir(public_path($filePath))) {
-                array_push($directories, $file);
-            } else {
-                array_push($files, $file);
-            }
-        }
-        return $this->successResponse([
-            "files" => $files,
-            "directories" => $directories
-        ]);
-    }
-
     public function createTest(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -65,12 +37,13 @@ class TestController extends Controller
             return response()->json(["error" => "Id Project tidak ditemukan"], 400);
         }
 
-
-
-        // if ($fields['category'] == config('constants.CATEGORY.PRIORITY_1') || $fields['category'] == config('constants.CATEGORY.PRIORITY_2')) {
-        // } else {
-        //     return response()->json(["error" => "Category salah"], 400);
-        // }
+        if ($fields['status'] == config('constants.TEST_STATUS.OPEN') || $fields['status'] == config('constants.TEST_STATUS.TO_DO') || $fields['status'] == config('constants.TEST_STATUS.FIXED') || $fields['status'] == config('constants.TEST_STATUS.REOPEN') || $fields['status'] == config('constants.TEST_STATUS.CLOSED')) {
+        } else {
+            return response()->json([
+                "error" => "Status salah",
+                "Status tersedia" => config('constants.TEST_STATUS')
+            ], 400);
+        }
 
         $new_test = Test::create($fields);
 
@@ -105,6 +78,21 @@ class TestController extends Controller
         }
     }
 
+    public function getAttachment($testId)
+    {
+        $data = Attachment::where('test_id', '=', $testId)->get();
+        if ($data) {
+            return response()->json([
+                "data" => $data,
+                "Status" => "Success"
+            ], 200);
+        } else {
+            return response()->json([
+                "Status" => "Failed"
+            ], 400);
+        }
+    }
+
     public function deleteTest(Request $request, $id)
     {
         $test = Test::where('id', '=', $id)->first();
@@ -121,13 +109,33 @@ class TestController extends Controller
     public function updateTest(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            "task" => "string",
-            "category" => "string",
+            "test_case" => "string",
+            "priority" => "string",
+            "status" => "string",
+            "type" => "string",
+            "expected_result" => "string",
+            "result" => "string",
+            "steps_to_reproduce" => "string",
+            "components" => "string",
+            "description" => "string",
+            "project_id" => "string",
         ]);
         if ($validator->fails()) {
             return response()->json(["data" => $validator->errors()], 400);
         };
         $fields = $validator->validated();
+        $project = Project::where('id', $fields['project_id'])->first();
+        if (!$project) {
+            return response()->json(["error" => "Id Project tidak ditemukan"], 400);
+        }
+
+        if ($fields['status'] == config('constants.TEST_STATUS.OPEN') || $fields['status'] == config('constants.TEST_STATUS.TO_DO') || $fields['status'] == config('constants.TEST_STATUS.FIXED') || $fields['status'] == config('constants.TEST_STATUS.REOPEN') || $fields['status'] == config('constants.TEST_STATUS.CLOSED')) {
+        } else {
+            return response()->json([
+                "error" => "Status salah",
+                "Status tersedia" => config('constants.TEST_STATUS')
+            ], 400);
+        }
         $test = Test::where('id', '=', $id)->first();
         if (!$test) {
             return response()->json(["error" => "Id test tidak ditemukan"], 400);
