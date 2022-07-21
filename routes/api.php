@@ -9,6 +9,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\UserController;
+use App\Models\Developing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,10 @@ Route::group(['middleware' => ['auth:sanctum', 'admincheck']], function () {
     Route::delete('/review/{id}', [ReviewController::class, 'deleteReview']);
     Route::put('/review/{id}', [ReviewController::class, 'updateReview']);
 
+    Route::post('/developing', [Developing::class, 'createDeveloping']);
+    Route::delete('/developing/{id}', [Developing::class, 'deleteDeveloping']);
+    Route::put('/developing/{id}', [Developing::class, 'updateDeveloping']);
+
     Route::post('/internalBriefing', [InternalBriefingController::class, 'createInternalBriefing']);
     Route::delete('/internalBriefing/{id}', [InternalBriefingController::class, 'deleteInternalBriefing']);
     Route::put('/internalBriefing/{id}', [InternalBriefingController::class, 'updateInternalBriefing']);
@@ -71,6 +76,7 @@ Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::put('/user/{id}', [UserController::class, 'updateUser']);
     Route::delete('/user/{id}', [UserController::class, 'deleteUser']);
+    Route::get('/developing/{task_id}', [Developing::class, 'getDeveloping']);
     Route::get('/team/{id}', [TeamController::class, 'getTeam']);
     Route::get('/user/{id}', [UserController::class, 'getUserById']);
     Route::get('/teamById/{id}', [TeamController::class, 'getTeamById']);
@@ -81,7 +87,7 @@ Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
     Route::get('/internalBriefing/{projectId}', [InternalBriefingController::class, 'getInternalBriefing']);
     Route::get('/team-member/{teamId}', [TeamMemberController::class, 'getTeamMember']);
     Route::get('/project', [ProjectController::class, 'getProject']);
-
+    Route::get('/project/{id}', [ProjectController::class, 'getProjectById']);
     Route::get('/test/{id}', [TestController::class, 'getTest']);
     Route::get('/attachment/{testId}', [TestController::class, 'getAttachment']);
 });

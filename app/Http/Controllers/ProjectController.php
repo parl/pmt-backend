@@ -45,6 +45,40 @@ class ProjectController extends Controller
         ], 200);
     }
 
+    public function getProjectById($id)
+    {
+        $users = DB::table('projects')
+            ->join('users', 'users.id', '=', 'projects.PIC_id')
+            ->join('teams', 'teams.id', '=', 'projects.id_team')
+            ->select('projects.*', 'users.name as PIC_name', 'teams.name as team_name')
+            ->where('projects.id', '=', $id)
+            ->get();
+        $progress = DB::table('internal_briefing')
+            ->join('internal_briefings', 'internal_briefings.id', '=', 'developings.task_id')
+            ->select('developings.*')
+            ->where('internal_briefings.project_id', '=', $id)
+            ->get();
+        $done = 0;
+        $not_done = 0;
+        foreach ($progress as $value) {
+            $not_done += 1;
+            if ($value['status'] == 'constants.DEV_STATUS.DONE') {
+                $done += 1;
+            }
+        }
+        $result = $done / $not_done;
+        $progress =  round((float)$result * 100) . '%';
+        if ($users) {
+            return response()->json([
+                "data" => [$users, $progress],
+                "Status" => "Success"
+            ], 200);
+        } else {
+            return response()->json([
+                "Status" => "Failed"
+            ], 400);
+        }
+    }
     public function getproject()
     {
         $users = DB::table('projects')
@@ -52,7 +86,6 @@ class ProjectController extends Controller
             ->join('teams', 'teams.id', '=', 'projects.id_team')
             ->select('projects.*', 'users.name as PIC_name', 'teams.name as team_name')
             ->get();
-        $data = Project::get();
         if ($users) {
             return response()->json([
                 "data" => $users,
