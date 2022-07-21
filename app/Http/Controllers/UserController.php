@@ -36,6 +36,19 @@ class UserController extends Controller
             ], 400);
         }
     }
+    public function deleteInternalBriefing($id)
+    {
+        $user = User::where('id', '=', $id)->first();
+        if (!$user) {
+            return response()->json(["error" => "User tidak ditemukan"], 400);
+        }
+        User::where('id', '=', $id)->delete();
+        return response()->json([
+            "data" => null,
+            "Status" => "Success"
+        ], 200);
+    }
+
     public function updateUser(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
