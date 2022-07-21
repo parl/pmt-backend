@@ -36,7 +36,7 @@ class UserController extends Controller
             ], 400);
         }
     }
-    public function deleteInternalBriefing($id)
+    public function deleteUser($id)
     {
         $user = User::where('id', '=', $id)->first();
         if (!$user) {

@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
 
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::put('/user/{id}', [UserController::class, 'updateUser']);
+    Route::delete('/user/{id}', [UserController::class, 'deleteUser']);
     Route::get('/team/{id}', [TeamController::class, 'getTeam']);
     Route::get('/user/{id}', [UserController::class, 'getUserById']);
     Route::get('/teamById/{id}', [TeamController::class, 'getTeamById']);
