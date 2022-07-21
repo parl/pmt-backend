@@ -95,7 +95,7 @@ class TeamController extends Controller
     public function updateTeam(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            "name" => "required|string",
+            "name" => "string",
         ]);
         if ($validator->fails()) {
             return response()->json(["data" => $validator->errors()], 400);

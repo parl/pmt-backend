@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -34,5 +35,27 @@ class UserController extends Controller
                 "Status" => "Failed"
             ], 400);
         }
+    }
+    public function updateUser(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            "name" => "string",
+            "email" => "email",
+            "username" => "string",
+            "password" => "string",
+        ]);
+        if ($validator->fails()) {
+            return response()->json(["data" => $validator->errors()], 400);
+        };
+        $fields = $validator->validated();
+        $user = User::where('id', '=', $id)->first();
+        if (!$user) {
+            return response()->json(["error" => "Id user tidak ditemukan"], 400);
+        }
+        $user->update($fields);
+        return response()->json([
+            "data" => $user,
+            "Status" => "Update Success"
+        ], 200);
     }
 }
