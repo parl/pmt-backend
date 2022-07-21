@@ -17,7 +17,7 @@ class CreateAttachmentsTable extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('url');
-            $table->string('test_id');
+            $table->uuid('test_id');
             $table->timestamps();
             $table->foreign('test_id')->references('id')->on('tests');
         });
