@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use App\Models\User_team;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -32,13 +34,25 @@ class TeamController extends Controller
 
         if ($fields['user']) {
             $user = $fields['user'];
-            for ($i = 0; $i < count($user); $i++) {
-                $data = [
-                    'id_team' => $new_team['id'],
-                    'id_user' => $user[$i]
-                ];
-                DB::table('user_teams')->insert($data);
+            $data = [];
+            foreach ($user as $pengguna) {
+                $now = Carbon::now()->toDateTimeString();
+                $member_id = (string) Str::uuid();
+                array_push($data, [
+                    "id" => $member_id,
+                    "team_id" => $new_team['id'],
+                    "user_id" => $pengguna,
+                    "created_at" => $now,
+                    "updated_at" => $now
+                ]);
             }
+            User_team::insert($data);
+            // for ($i = 0; $i < count($user); $i++) {
+            //     $data = [
+            //         'team_id' => $new_team['id'],
+            //         'user_id' => $user[$i]
+            //     ];
+            // }
         }
         return response()->json([
             "User" => $new_team,
