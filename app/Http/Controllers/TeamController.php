@@ -16,7 +16,8 @@ class TeamController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "name" => "required|string",
-            "user" => "array"
+            "user" => "array",
+            "user.*" => "uuid"
         ]);
 
         if ($validator->fails()) {
