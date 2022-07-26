@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DevelopingController;
 use App\Http\Controllers\InternalBriefingController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RequirementController;
@@ -53,9 +54,9 @@ Route::group(['middleware' => ['auth:sanctum', 'admincheck']], function () {
     Route::delete('/review/{id}', [ReviewController::class, 'deleteReview']);
     Route::put('/review/{id}', [ReviewController::class, 'updateReview']);
 
-    Route::post('/developing', [Developing::class, 'createDeveloping']);
-    Route::delete('/developing/{id}', [Developing::class, 'deleteDeveloping']);
-    Route::put('/developing/{id}', [Developing::class, 'updateDeveloping']);
+    Route::post('/developing', [DevelopingController::class, 'createDeveloping']);
+    Route::delete('/developing/{id}', [DevelopingController::class, 'deleteDeveloping']);
+    Route::put('/developing/{id}', [DevelopingController::class, 'updateDeveloping']);
 
     Route::post('/internalBriefing', [InternalBriefingController::class, 'createInternalBriefing']);
     Route::delete('/internalBriefing/{id}', [InternalBriefingController::class, 'deleteInternalBriefing']);
@@ -80,7 +81,7 @@ Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
     Route::get('/client/{id}', [UserController::class, 'getClientById']);
     Route::get('/client', [UserController::class, 'getAllClient']);
 
-    Route::get('/developing/{task_id}', [Developing::class, 'getDeveloping']);
+    Route::get('/developing/{task_id}', [DevelopingController::class, 'getDeveloping']);
 
     Route::get('/team/{id}', [TeamController::class, 'getTeam']);
     Route::get('/teamById/{id}', [TeamController::class, 'getTeamById']);
