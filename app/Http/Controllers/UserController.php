@@ -10,7 +10,21 @@ class UserController extends Controller
 {
     public function getAllUser(Request $request)
     {
-        $data = User::get();
+        $data = User::where('role', '=', 'user')->get();
+        if ($data) {
+            return response()->json([
+                "data" => $data,
+                "Status" => "Success"
+            ], 200);
+        } else {
+            return response()->json([
+                "Status" => "Failed"
+            ], 400);
+        }
+    }
+    public function getAllClient(Request $request)
+    {
+        $data = User::where('role', '=', 'client')->get();
         if ($data) {
             return response()->json([
                 "data" => $data,
@@ -24,7 +38,21 @@ class UserController extends Controller
     }
     public function getUserById($id)
     {
-        $data = User::where('id', '=', $id)->first();;
+        $data = User::where('id', '=', $id)->where('role', '=', 'user')->first();
+        if ($data) {
+            return response()->json([
+                "data" => $data,
+                "Status" => "Success"
+            ], 200);
+        } else {
+            return response()->json([
+                "Status" => "Failed"
+            ], 400);
+        }
+    }
+    public function getClientById($id)
+    {
+        $data = User::where('id', '=', $id)->where('role', '=', 'client')->first('name AS instansi');
         if ($data) {
             return response()->json([
                 "data" => $data,

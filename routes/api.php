@@ -76,18 +76,28 @@ Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::put('/user/{id}', [UserController::class, 'updateUser']);
     Route::delete('/user/{id}', [UserController::class, 'deleteUser']);
-    Route::get('/developing/{task_id}', [Developing::class, 'getDeveloping']);
-    Route::get('/team/{id}', [TeamController::class, 'getTeam']);
     Route::get('/user/{id}', [UserController::class, 'getUserById']);
+    Route::get('/client/{id}', [UserController::class, 'getClientById']);
+    Route::get('/client', [UserController::class, 'getAllClient']);
+
+    Route::get('/developing/{task_id}', [Developing::class, 'getDeveloping']);
+
+    Route::get('/team/{id}', [TeamController::class, 'getTeam']);
     Route::get('/teamById/{id}', [TeamController::class, 'getTeamById']);
     Route::get('/team', [TeamController::class, 'getAllTeam']);
+    Route::get('/team-member/{teamId}', [TeamMemberController::class, 'getTeamMember']);
+
     Route::get('/review/{taskId}', [ReviewController::class, 'getReview']);
     Route::get('/reviewById/{Id}', [ReviewController::class, 'getReviewById']);
+
     Route::get('/requirement/{projectId}', [RequirementController::class, 'getRequirement']);
+
     Route::get('/internalBriefing/{projectId}', [InternalBriefingController::class, 'getInternalBriefing']);
-    Route::get('/team-member/{teamId}', [TeamMemberController::class, 'getTeamMember']);
+
     Route::get('/project', [ProjectController::class, 'getProject']);
     Route::get('/project/{id}', [ProjectController::class, 'getProjectById']);
+
     Route::get('/test/{id}', [TestController::class, 'getTest']);
+
     Route::get('/attachment/{testId}', [TestController::class, 'getAttachment']);
 });

@@ -22,7 +22,8 @@ class AuthController extends Controller
             return response()->json(["data" => $validator->errors()], 400);
         };
         $fields = $validator->validated();
-        if ($fields['role'] != "user") {
+        if ($fields['role'] == "user" || $fields['role'] == "client") {
+        } else {
             return response()->json(["error" => "Role Salah"], 400);
         }
         $user = User::where('email', $fields['email'])->first();
