@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Models\User_team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,6 +16,7 @@ class TeamController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "name" => "required|string",
+            "user" => "array"
         ]);
 
         if ($validator->fails()) {
@@ -27,6 +29,16 @@ class TeamController extends Controller
         }
         $new_team = Team::create($fields);
 
+        if ($fields['user']) {
+            $user = $fields['user'];
+            for ($i = 0; $i < count($user); $i++) {
+                $data = [
+                    'id_team' => $new_team['id'],
+                    'id_user' => $user[$i]
+                ];
+                DB::table('user_teams')->insert($data);
+            }
+        }
         return response()->json([
             "User" => $new_team,
             "Status" => "Create Team Succeed"
