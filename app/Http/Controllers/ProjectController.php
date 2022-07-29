@@ -61,19 +61,26 @@ class ProjectController extends Controller
             ->select('developings.*')
             ->where('internal_briefings.project_id', '=', $id)
             ->get();
-        $result = 0;
-        $progress =  round((float)$result * 100) . '%';
+
         return response()->json([
-            "data" => $dev,
+            "data" => $dev->status,
             "Status" => "Success"
         ], 200);
-        if ($dev['status']) {
+
+        // return response()->json([
+        //     "data" => $dev['status'],
+        //     "Status" => "Success"
+        // ], 200);
+
+        $result = 0;
+        $progress =  round((float)$result * 100) . '%';
+        if ($dev) {
             $status = $dev;
             $done = 0;
             $not_done = 0;
             foreach ($status as $value) {
                 $not_done += 1;
-                if ($value == 'constants.DEV_STATUS.DONE') {
+                if ($value['status'] == 'constants.DEV_STATUS.DONE') {
                     $done += 1;
                 }
             }
