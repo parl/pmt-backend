@@ -98,9 +98,10 @@ class TeamController extends Controller
             ->join('users', 'users.id', '=', 'user_teams.user_id')
             ->select('user_teams.user_id', 'users.name as nama')
             ->get();
+        $result = array_push($data, $team_member);
         if ($data && $team_member) {
             return response()->json([
-                "data" => [$data, $team_member],
+                "data" => $result,
                 "Status" => "Success"
             ], 200);
         } else {
