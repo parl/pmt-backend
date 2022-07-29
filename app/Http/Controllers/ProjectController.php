@@ -58,12 +58,12 @@ class ProjectController extends Controller
         }
         $dev = DB::table('developings')
             ->join('internal_briefings', 'internal_briefings.id', '=', 'developings.task_id')
-            ->select('developings.*')
+            ->select('developings.status')
             ->where('internal_briefings.project_id', '=', $id)
             ->get();
 
         return response()->json([
-            "data" => $dev['data'],
+            "data" => $dev,
             "Status" => "Success"
         ], 200);
 
@@ -75,12 +75,11 @@ class ProjectController extends Controller
         $result = 0;
         $progress =  round((float)$result * 100) . '%';
         if ($dev) {
-            $status = $dev;
             $done = 0;
             $not_done = 0;
-            foreach ($status as $value) {
+            foreach ($dev as $value) {
                 $not_done += 1;
-                if ($value['status'] == 'constants.DEV_STATUS.DONE') {
+                if ($value == 'constants.DEV_STATUS.DONE') {
                     $done += 1;
                 }
             }
