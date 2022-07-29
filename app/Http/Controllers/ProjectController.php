@@ -100,7 +100,7 @@ class ProjectController extends Controller
                 ->get();
 
             $result = 0;
-            $progress =  round((float)$result * 100) . '%';
+            $progress =  '0%';
             if ($dev) {
                 $done = 0;
                 foreach ($dev as $d) {
@@ -111,7 +111,7 @@ class ProjectController extends Controller
                 $result = $done / count($dev);
                 $progress =  round((float)$result * 100) . '%';
             }
-            array_push($p, $progress);
+            $p->progress = $progress;
         }
         if ($projects) {
             return response()->json([
