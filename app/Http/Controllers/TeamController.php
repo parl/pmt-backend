@@ -93,7 +93,11 @@ class TeamController extends Controller
     public function getTeam($id)
     {
         $data = Team::where('id', '=', $id)->get();
-        $team_member = User_team::where('team_id', '=', $id)->get();
+        // $team_member = User_team::where('team_id', '=', $id)->get();
+        $team_member = DB::table('user_teams')
+            ->join('users', 'users.id', '=', 'user_teams.user_id')
+            ->select('user_teams.user_id', 'users.name as user_name')
+            ->get();
         if ($data && $team_member) {
             return response()->json([
                 "data" => [$data, $team_member],
