@@ -16,9 +16,9 @@ class DevelopingController extends Controller
             "task_id" => "required|uuid",
             "name" => "required|string",
             "start_date" => "required|string",
-            "end_date" => "string|nullable",
             "priority" => "required|string",
             "status" => "required|string",
+            "end_date" => "string",
         ]);
 
         if ($validator->fails()) {
