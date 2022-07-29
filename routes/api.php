@@ -74,12 +74,9 @@ Route::group(['middleware' => ['auth:sanctum', 'admincheck']], function () {
 
 Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
 
-    Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::put('/user/{id}', [UserController::class, 'updateUser']);
     Route::delete('/user/{id}', [UserController::class, 'deleteUser']);
     Route::get('/user/{id}', [UserController::class, 'getUserById']);
-    Route::get('/client/{id}', [UserController::class, 'getClientById']);
-    Route::get('/client', [UserController::class, 'getAllClient']);
 
     Route::get('/developing/{task_id}', [DevelopingController::class, 'getDeveloping']);
 
@@ -101,4 +98,9 @@ Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
     Route::get('/test/{id}', [TestController::class, 'getTest']);
 
     Route::get('/attachment/{testId}', [TestController::class, 'getAttachment']);
+});
+Route::group(['middleware' => ['auth:sanctum', 'clientcheck']], function () {
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
+    Route::get('/client/{id}', [UserController::class, 'getClientById']);
+    Route::get('/client', [UserController::class, 'getAllClient']);
 });
