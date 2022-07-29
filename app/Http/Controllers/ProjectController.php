@@ -53,14 +53,14 @@ class ProjectController extends Controller
             ->select('projects.*', 'users.name as PIC_name', 'teams.name as team_name')
             ->where('projects.id', '=', $id)
             ->get();
-        $dev = DB::table('internal_briefings')
-            ->join('developings', 'developings.task_id', '=', 'internal_briefings.id')
+        $dev = DB::table('developings')
+            ->join('internal_briefings', 'internal_briefings.id', '=', 'developings.task_id')
             ->select('developings.*')
             ->where('internal_briefings.project_id', '=', $id)
             ->get();
         $result = 0;
         $progress =  round((float)$result * 100) . '%';
-        $status = $dev;
+        $status = $dev['status'];
         return response()->json([
             "data" => $status,
             "Status" => "Success"
