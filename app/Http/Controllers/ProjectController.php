@@ -53,6 +53,9 @@ class ProjectController extends Controller
             ->select('projects.*', 'users.name as PIC_name', 'teams.name as team_name')
             ->where('projects.id', '=', $id)
             ->get();
+        if (!$users) {
+            return response()->json(["error" => "Project Tidak ditemukan"], 400);
+        }
         $dev = DB::table('developings')
             ->join('internal_briefings', 'internal_briefings.id', '=', 'developings.task_id')
             ->select('developings.*')
@@ -60,12 +63,12 @@ class ProjectController extends Controller
             ->get();
         $result = 0;
         $progress =  round((float)$result * 100) . '%';
-        $status = $dev;
-        return response()->json([
-            "data" => $status,
-            "Status" => "Success"
-        ], 200);
-        if ($status) {
+        // return response()->json([
+        //     "data" => $status,
+        //     "Status" => "Success"
+        // ], 200);
+        if ($dev['status']) {
+            $status = $dev;
             $done = 0;
             $not_done = 0;
             foreach ($status as $value) {
