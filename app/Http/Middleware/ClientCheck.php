@@ -16,7 +16,7 @@ class ClientCheck
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->role == "client" || $request->user()->role == "user" || $request->user()->role == "admin") {
+        if ($request->user()->role == "client" || $request->user()->role == "admin") {
             return $next($request);
         }
         return response()->json([

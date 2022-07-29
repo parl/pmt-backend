@@ -98,9 +98,10 @@ Route::group(['middleware' => ['auth:sanctum', 'usercheck']], function () {
     Route::get('/test/{id}', [TestController::class, 'getTest']);
 
     Route::get('/attachment/{testId}', [TestController::class, 'getAttachment']);
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
 });
 Route::group(['middleware' => ['auth:sanctum', 'clientcheck']], function () {
-    Route::post('/auth/logout', [AuthController::class, 'logout']);
+    Route::post('/auth/client/logout', [AuthController::class, 'logout']);
     Route::get('/client/{id}', [UserController::class, 'getClientById']);
     Route::get('/client', [UserController::class, 'getAllClient']);
 });
