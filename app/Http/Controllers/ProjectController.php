@@ -63,7 +63,7 @@ class ProjectController extends Controller
             ->get();
 
         return response()->json([
-            "data" => $dev->status,
+            "data" => $dev['data'],
             "Status" => "Success"
         ], 200);
 
