@@ -67,7 +67,7 @@ class ProjectController extends Controller
         if ($dev) {
             $done = 0;
             foreach ($dev as $d) {
-                if ($d->status == 'constants.DEV_STATUS.DONE') {
+                if ($d->status == config('constants.DEV_STATUS.DONE')) {
                     $done += 1;
                 }
             }
