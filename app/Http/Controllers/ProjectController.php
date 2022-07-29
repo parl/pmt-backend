@@ -73,14 +73,10 @@ class ProjectController extends Controller
             }
             $result = $done / count($dev);
             $progress =  round((float)$result * 100) . '%';
-            return response()->json([
-                "data" => [$done, count($dev), $result, $progress],
-                "Status" => "Success"
-            ], 200);
         }
         if ($users) {
             return response()->json([
-                "data" => [$users, $progress],
+                "data" => ["Project" => $users, "Progress" => $progress],
                 "Status" => "Success"
             ], 200);
         } else {
