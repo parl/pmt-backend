@@ -77,10 +77,19 @@ class TeamController extends Controller
 
     public function getAllTeam()
     {
-        $data = Team::get();
-        if ($data) {
+        $teams = Team::get();
+        foreach ($teams as $t) {
+            $team_member = DB::table('user_teams')
+                ->join('users', 'users.id', '=', 'user_teams.user_id')
+                ->select('user_teams.id as member_id', 'user_teams.user_id', 'users.name as nama_user')
+                ->where('user_teams.team_id', '=', $t->id)
+                ->get();
+
+            $t->team_member = $team_member;
+        }
+        if ($teams) {
             return response()->json([
-                "data" => $data,
+                "data" => $teams,
                 "Status" => "Success"
             ], 200);
         } else {
