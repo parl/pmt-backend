@@ -109,7 +109,7 @@ class ProjectController extends Controller
                     }
                 }
                 $result = $done / count($dev);
-                $progress =  $result;
+                $progress =  (int)$result * 100;
             }
             $p->progress = $progress;
         }
