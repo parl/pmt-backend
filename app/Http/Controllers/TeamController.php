@@ -62,7 +62,7 @@ class TeamController extends Controller
 
     public function getTeamById($id)
     {
-        $data = Team::where('id', '=', $id)->first();;
+        $data = Team::where('id', '=', $id)->first();
         if ($data) {
             return response()->json([
                 "data" => $data,
@@ -93,15 +93,15 @@ class TeamController extends Controller
     public function getTeam($id)
     {
         // $team_member = User_team::where('team_id', '=', $id)->get();
+        $team = Team::where('id', '=', $id)->first();
         $team_member = DB::table('user_teams')
             ->join('users', 'users.id', '=', 'user_teams.user_id')
-            ->join('teams', 'teams.id', '=', 'user_teams.team_id')
-            ->select('teams.id as id_team', 'teams.name as nama_team', 'user_teams.id as member_id', 'user_teams.user_id', 'users.name as nama_user')
+            ->select('user_teams.id as member_id', 'user_teams.user_id', 'users.name as nama_user')
             ->where('user_teams.team_id', '=', $id)
             ->get();
-        if ($team_member) {
+        if ($team && $team_member) {
             return response()->json([
-                "data" => $team_member,
+                "data" => [$team, $team_member],
                 "Status" => "Success"
             ], 200);
         } else {
