@@ -60,7 +60,7 @@ class ProjectController extends Controller
             ->get();
         $result = 0;
         $progress =  round((float)$result * 100) . '%';
-        $status = $dev['status'];
+        $status = $dev;
         return response()->json([
             "data" => $status,
             "Status" => "Success"
