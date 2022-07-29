@@ -54,7 +54,7 @@ class ProjectController extends Controller
             ->where('projects.id', '=', $id)
             ->get();
         $dev = DB::table('internal_briefings')
-            ->join('internal_briefings', 'internal_briefings.id', '=', 'developings.task_id')
+            ->join('developings', 'developings.task_id', '=', 'internal_briefings.id')
             ->select('developings.*')
             ->where('internal_briefings.project_id', '=', $id)
             ->get();
