@@ -62,10 +62,10 @@ class ProjectController extends Controller
             ->where('internal_briefings.project_id', '=', $id)
             ->get();
 
-        return response()->json([
-            "data" => $dev,
-            "Status" => "Success"
-        ], 200);
+        // return response()->json([
+        //     "data" => $dev,
+        //     "Status" => "Success"
+        // ], 200);
 
         // return response()->json([
         //     "data" => $dev['status'],
