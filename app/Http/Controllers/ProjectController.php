@@ -100,7 +100,7 @@ class ProjectController extends Controller
                 ->get();
 
             $result = 0;
-            $progress =  '0%';
+            $progress =  0;
             if (count($dev) >= 1) {
                 $done = 0;
                 foreach ($dev as $d) {
@@ -109,7 +109,7 @@ class ProjectController extends Controller
                     }
                 }
                 $result = $done / count($dev);
-                $progress =  round((float)$result * 100) . '%';
+                $progress =  $result;
             }
             $p->progress = $progress;
         }
