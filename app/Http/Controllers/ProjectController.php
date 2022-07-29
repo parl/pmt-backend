@@ -65,6 +65,10 @@ class ProjectController extends Controller
         $result = 0;
         $progress =  round((float)$result * 100) . '%';
         if ($dev) {
+            return response()->json([
+                "data" => $dev,
+                "Status" => "Success"
+            ], 200);
             $done = 0;
             foreach ($dev as $d) {
                 if ($d->status == 'constants.DEV_STATUS.DONE') {
