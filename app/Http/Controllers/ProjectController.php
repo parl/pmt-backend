@@ -60,16 +60,17 @@ class ProjectController extends Controller
             ->get();
         $result = 0;
         $progress =  round((float)$result * 100) . '%';
+        $status = $dev['status'];
         return response()->json([
-            "data" => $dev['status'],
+            "data" => $status,
             "Status" => "Success"
         ], 200);
-        if ($dev['status']) {
+        if ($status) {
             $done = 0;
             $not_done = 0;
-            foreach ($dev as $value) {
+            foreach ($status as $value) {
                 $not_done += 1;
-                if ($value['status'] == 'constants.DEV_STATUS.DONE') {
+                if ($value == 'constants.DEV_STATUS.DONE') {
                     $done += 1;
                 }
             }
