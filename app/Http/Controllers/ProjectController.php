@@ -63,8 +63,6 @@ class ProjectController extends Controller
         $result = $done / $not_done;
         $progress =  round((float)$result * 100) . '%';
         if ($dev['status']) {
-            $done = 0;
-            $not_done = 0;
             foreach ($dev as $value) {
                 $not_done += 1;
                 if ($value['status'] == 'constants.DEV_STATUS.DONE') {
