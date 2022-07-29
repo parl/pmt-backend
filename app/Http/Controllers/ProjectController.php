@@ -101,7 +101,7 @@ class ProjectController extends Controller
 
             $result = 0;
             $progress =  '0%';
-            if ($dev) {
+            if (count($dev) >= 1) {
                 $done = 0;
                 foreach ($dev as $d) {
                     if ($d->status == config('constants.DEV_STATUS.DONE')) {
