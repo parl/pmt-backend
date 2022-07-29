@@ -18,7 +18,7 @@ class DevelopingController extends Controller
             "start_date" => "required|string",
             "priority" => "required|string",
             "status" => "required|string",
-            "end_date" => "string",
+            "end_date" => "string|nullable",
         ]);
 
         if ($validator->fails()) {
