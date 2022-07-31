@@ -125,9 +125,9 @@ class ProjectController extends Controller
         }
     }
 
-    public function deleteproject(Request $request, $id)
+    public function deleteproject($id)
     {
-        $project = Project::where('id', '=', $id)->first();
+        $project = Project::where('id', '=', $id)->get();
         if (!$project) {
             return response()->json(["error" => "Project tidak ditemukan"], 400);
         }
