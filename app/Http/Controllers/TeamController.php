@@ -79,9 +79,8 @@ class TeamController extends Controller
     {
         $teams = Team::get();
         foreach ($teams as $t) {
-            $team_member = DB::table('user_teams')
+            $team_member = User_team::select('user_teams.id as member_id', 'user_teams.user_id', 'users.name as nama_user')
                 ->join('users', 'users.id', '=', 'user_teams.user_id')
-                ->select('user_teams.id as member_id', 'user_teams.user_id', 'users.name as nama_user')
                 ->where('user_teams.team_id', '=', $t->id)
                 ->get();
 
@@ -103,9 +102,8 @@ class TeamController extends Controller
     {
         // $team_member = User_team::where('team_id', '=', $id)->get();
         $team = Team::where('id', '=', $id)->first();
-        $team_member = DB::table('user_teams')
+        $team_member = User_team::select('user_teams.id as member_id', 'user_teams.user_id', 'users.name as nama_user')
             ->join('users', 'users.id', '=', 'user_teams.user_id')
-            ->select('user_teams.id as member_id', 'user_teams.user_id', 'users.name as nama_user')
             ->where('user_teams.team_id', '=', $id)
             ->get();
         if ($team && $team_member) {

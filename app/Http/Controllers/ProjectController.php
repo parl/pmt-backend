@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Developing;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,18 +48,16 @@ class ProjectController extends Controller
 
     public function getProjectById($id)
     {
-        $users = DB::table('projects')
+        $users = Project::select('projects.*', 'users.name as PIC_name', 'teams.name as team_name')
             ->join('users', 'users.id', '=', 'projects.PIC_id')
             ->join('teams', 'teams.id', '=', 'projects.id_team')
-            ->select('projects.*', 'users.name as PIC_name', 'teams.name as team_name')
             ->where('projects.id', '=', $id)
             ->get();
         if (!$users) {
             return response()->json(["error" => "Project Tidak ditemukan"], 400);
         }
-        $dev = DB::table('developings')
+        $dev = Developing::select('developings.*')
             ->join('internal_briefings', 'internal_briefings.id', '=', 'developings.task_id')
-            ->select('developings.*')
             ->where('internal_briefings.project_id', '=', $id)
             ->get();
 
@@ -87,15 +86,14 @@ class ProjectController extends Controller
     }
     public function getproject()
     {
-        $projects = DB::table('projects')
+        $projects = Project::select('projects.*', 'users.name as PIC_name', 'teams.name as team_name')
             ->join('users', 'users.id', '=', 'projects.PIC_id')
             ->join('teams', 'teams.id', '=', 'projects.id_team')
-            ->select('projects.*', 'users.name as PIC_name', 'teams.name as team_name')
             ->get();
+
         foreach ($projects as $p) {
-            $dev = DB::table('developings')
+            $dev = Developing::select('developings.*')
                 ->join('internal_briefings', 'internal_briefings.id', '=', 'developings.task_id')
-                ->select('developings.*')
                 ->where('internal_briefings.project_id', '=', $p->id)
                 ->get();
 
