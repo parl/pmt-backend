@@ -15,7 +15,6 @@ class CreateDevelopingsTable extends Migration
     {
         Schema::create('developings', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('priority');

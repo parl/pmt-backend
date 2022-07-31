@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssignedTo;
 use App\Models\Developing;
+use App\Models\Project;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,6 +23,8 @@ class DevelopingController extends Controller
             "priority" => "required|string",
             "status" => "required|string",
             "end_date" => "string|nullable",
+            "user" => "array",
+            "user.*" => "uuid"
         ]);
 
         if ($validator->fails()) {
@@ -52,23 +58,47 @@ class DevelopingController extends Controller
         }
         $new_developing = Developing::create($fields);
 
+        // foreach ($fields['user'] as $users){
+        //     $cekUser = Project::select('User_teams.nama')
+        //     ->join('internal_briefings', 'internal_briefings.id', '=', 'developings.task_id')
+        //     ->where('internal_briefings.project_id', '=', $p->id)
+        //     ->get();
+        // }
+
+        if ($fields['user']) {
+            $user = $fields['user'];
+            $data = [];
+            foreach ($user as $pengguna) {
+                $now = Carbon::now()->toDateTimeString();
+                $member_id = (string) Str::uuid();
+                array_push($data, [
+                    "id" => $member_id,
+                    "developing_id" => $new_developing['id'],
+                    "user_id" => $pengguna,
+                    "created_at" => $now,
+                    "updated_at" => $now
+                ]);
+            }
+            AssignedTo::insert($data);
+        }
+
         return response()->json([
             "User" => $new_developing,
             "Status" => "Create Developing Succeed"
         ], 200);
     }
 
-    public function getdeveloping($internal_briefing_id)
+    public function getdeveloping($id)
     {
-        // $users = DB::table('developings')
-        //     ->join('users', 'users.id', '=', 'developings.PIC_id')
-        //     ->join('teams', 'teams.id', '=', 'developings.id_team')
-        //     ->select('developings.*', 'users.name as PIC_name', 'teams.name as team_name')
-        //     ->get();
-        $data = Developing::where('task_id', '=', $internal_briefing_id)->get();
-        if ($data) {
+        $developing = Developing::where('task_id', '=', $id)->first();
+        $dev_member = AssignedTo::select('assigned_tos.id as member_id', 'assigned_tos.user_id', 'users.name as nama_user')
+            ->join('users', 'users.id', '=', 'assigned_tos.user_id')
+            ->join('developings', 'developings.id', '=', 'assigned_tos.developing_id')
+            ->where('developings.developing_id', '=', $developing->$id)
+            ->get();
+        if ($developing && $dev_member) {
             return response()->json([
-                "data" => $data,
+                "data" => ['Developing' => $developing, 'Member' => $dev_member],
                 "Status" => "Success"
             ], 200);
         } else {
@@ -78,7 +108,7 @@ class DevelopingController extends Controller
         }
     }
 
-    public function deletedeveloping(Request $request, $id)
+    public function deletedeveloping($id)
     {
         $developing = Developing::where('id', '=', $id)->first();
         if (!$developing) {

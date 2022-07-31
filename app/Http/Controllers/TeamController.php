@@ -47,12 +47,6 @@ class TeamController extends Controller
                 ]);
             }
             User_team::insert($data);
-            // for ($i = 0; $i < count($user); $i++) {
-            //     $data = [
-            //         'team_id' => $new_team['id'],
-            //         'user_id' => $user[$i]
-            //     ];
-            // }
         }
         return response()->json([
             "User" => $new_team,

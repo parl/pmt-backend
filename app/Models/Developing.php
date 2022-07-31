@@ -13,7 +13,6 @@ class Developing extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable = [
-        'name',
         'task_id',
         'start_date',
         'end_date',
