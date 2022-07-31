@@ -131,9 +131,9 @@ class ProjectController extends Controller
         if (!$project) {
             return response()->json(["error" => "Project tidak ditemukan"], 400);
         }
-        Project::where('id', '=', $id)->delete();
+        $delete = Project::where('id', '=', $id)->delete();
         return response()->json([
-            "data" => null,
+            "data" => $delete,
             "Status" => "Success"
         ], 200);
     }
