@@ -83,7 +83,6 @@ class TeamController extends Controller
                 ->join('users', 'users.id', '=', 'user_teams.user_id')
                 ->select('user_teams.id as member_id', 'user_teams.user_id', 'users.name as nama_user')
                 ->where('user_teams.team_id', '=', $t->id)
-                ->where('deleted_at', '=', null)
                 ->get();
 
             $t->team_member = $team_member;
@@ -108,7 +107,6 @@ class TeamController extends Controller
             ->join('users', 'users.id', '=', 'user_teams.user_id')
             ->select('user_teams.id as member_id', 'user_teams.user_id', 'users.name as nama_user')
             ->where('user_teams.team_id', '=', $id)
-            ->where('deleted_at', '=', null)
             ->get();
         if ($team && $team_member) {
             return response()->json([

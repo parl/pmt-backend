@@ -52,7 +52,6 @@ class ProjectController extends Controller
             ->join('teams', 'teams.id', '=', 'projects.id_team')
             ->select('projects.*', 'users.name as PIC_name', 'teams.name as team_name')
             ->where('projects.id', '=', $id)
-            ->where('deleted_at', '=', null)
             ->get();
         if (!$users) {
             return response()->json(["error" => "Project Tidak ditemukan"], 400);
@@ -61,7 +60,6 @@ class ProjectController extends Controller
             ->join('internal_briefings', 'internal_briefings.id', '=', 'developings.task_id')
             ->select('developings.*')
             ->where('internal_briefings.project_id', '=', $id)
-            ->where('deleted_at', '=', null)
             ->get();
 
         $result = 0;
@@ -93,14 +91,12 @@ class ProjectController extends Controller
             ->join('users', 'users.id', '=', 'projects.PIC_id')
             ->join('teams', 'teams.id', '=', 'projects.id_team')
             ->select('projects.*', 'users.name as PIC_name', 'teams.name as team_name')
-            ->where('deleted_at', '=', null)
             ->get();
         foreach ($projects as $p) {
             $dev = DB::table('developings')
                 ->join('internal_briefings', 'internal_briefings.id', '=', 'developings.task_id')
                 ->select('developings.*')
                 ->where('internal_briefings.project_id', '=', $p->id)
-                ->where('deleted_at', '=', null)
                 ->get();
 
             $result = 0;
