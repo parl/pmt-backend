@@ -45,6 +45,11 @@ class User extends Authenticatable
         return $this->hasMany(AssignedTo::class, 'user_id');
     }
 
+    public function Request()
+    {
+        return $this->hasMany(Request::class, 'client_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
