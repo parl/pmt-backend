@@ -49,7 +49,7 @@ class TestController extends Controller
 
         $file = $request->file('attachments');
         $filename = $new_test['id'] . '_' . $file->getClientOriginalName();
-        $file->move(public_path('files/tests'), $filename);
+        $file->move(public_path('files/tests'), $new_test['id'], $filename);
 
         $file_data = [
             'test_id' => $new_test['id'],
