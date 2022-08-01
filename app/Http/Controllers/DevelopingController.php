@@ -94,7 +94,7 @@ class DevelopingController extends Controller
         $dev_member = AssignedTo::select('assigned_tos.id as member_id', 'assigned_tos.user_id', 'users.name as nama_user')
             ->join('users', 'users.id', '=', 'assigned_tos.user_id')
             ->join('developings', 'developings.id', '=', 'assigned_tos.developing_id')
-            ->where('developings.developing_id', '=', $developing->$id)
+            ->where('developings.task_id', '=', $developing->task_id)
             ->get();
         if ($developing && $dev_member) {
             return response()->json([
