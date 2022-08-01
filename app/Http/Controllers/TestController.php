@@ -49,12 +49,12 @@ class TestController extends Controller
 
         $file = $request->file('attachments');
         $filename = $new_test['id'] . '_' . $file->getClientOriginalName();
-        $file->move(public_path('files/tests'), $new_test['id'], $filename);
+        $file->move(public_path('files/tests'), $filename);
 
         $file_data = [
             'test_id' => $new_test['id'],
             'name' => $fields['test_case'],
-            'url' => 'files/tests/' . $new_test['id'] . $filename,
+            'url' => 'files/tests/' . $filename,
         ];
         $new_file = Attachment::create($file_data);
         return response()->json([
