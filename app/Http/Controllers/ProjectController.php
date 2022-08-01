@@ -62,8 +62,8 @@ class ProjectController extends Controller
             ->get();
 
         $result = 0;
-        $progress =  round((float)$result * 100) . '%';
-        if ($dev) {
+        $progress =  0;
+        if (count($dev) >= 1) {
             $done = 0;
             foreach ($dev as $d) {
                 if ($d->status == config('constants.DEV_STATUS.DONE')) {
@@ -71,11 +71,12 @@ class ProjectController extends Controller
                 }
             }
             $result = $done / count($dev);
-            $progress =  round((float)$result * 100) . '%';
+            $progress =  round((float)$result * 100);
         }
+        $users->progress = $progress;
         if ($users) {
             return response()->json([
-                "data" => ["Project" => $users, "Progress" => $progress],
+                "data" => $users,
                 "Status" => "Success"
             ], 200);
         } else {
