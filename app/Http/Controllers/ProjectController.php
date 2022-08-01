@@ -155,10 +155,10 @@ class ProjectController extends Controller
         if ($fields['end_date']) {
             $fields['end_date'] = date('Y-m-d H:i:s', $fields['end_date']);
         }
-        $name = Project::where('name', $fields['name'])->first();
-        if ($name) {
-            return response()->json(["error" => "Nama project Sudah digunakan"], 400);
-        }
+        // $name = Project::where('name', $fields['name'])->first();
+        // if ($name) {
+        //     return response()->json(["error" => "Nama project Sudah digunakan"], 400);
+        // }
         $project = Project::where('id', '=', $id)->first();
         if (!$project) {
             return response()->json(["error" => "Id project tidak ditemukan"], 400);
