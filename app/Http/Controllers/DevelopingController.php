@@ -52,9 +52,9 @@ class DevelopingController extends Controller
                 "Priority tersedia" => config('constants.CATEGORY')
             ], 400);
         }
-        $developing = Developing::where('name', '=', $fields['name'])->where('task_id', '=', $fields['task_id'])->first();
+        $developing = Developing::where('task_id', '=', $fields['task_id'])->first();
         if ($developing) {
-            return response()->json(["error" => "Nama Developing sudah digunakan"], 400);
+            return response()->json(["error" => "task pada internal briefing tersebut sudah mempunyai developing"], 400);
         }
         $new_developing = Developing::create($fields);
 
