@@ -165,7 +165,7 @@ class ProjectController extends Controller
         }
         $project->update($fields);
         return response()->json([
-            "data" => $project,
+            "data" => ["data awal" => $fields, "data akhir" => $project],
             "Status" => "Update Success"
         ], 200);
     }
